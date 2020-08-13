@@ -32,6 +32,7 @@ services:
 
   node-exporter:
     image: prom/node-exporter:latest
+    hostname: las1prometheus01
     container_name: node-exporter
     restart: always
     ports:
