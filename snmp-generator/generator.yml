@@ -1,0 +1,126 @@
+modules:
+  juniper_ex:
+    walk:
+      - jnxOperatingTable             # http://oidref.com/1.3.6.1.4.1.2636.3.1.13
+      - sysUpTime                     # http://oidref.com/1.3.6.1.2.1.1.3
+      - sysDescr                      # http://oidref.com/1.3.6.1.2.1.1
+      - sysName                       # http://oidref.com/1.3.6.1.2.1.1.5
+      - sysLocation                   # http://oidref.com/1.3.6.1.2.1.1.6
+      - sysContact                    # http://oidref.com/1.3.6.1.2.1.1.4
+      - jnxYellowAlarms               # http://oidref.com/1.3.6.1.4.1.2636.3.4.2.2
+      - jnxRedAlarms                  # http://oidref.com/1.3.6.1.4.1.2636.3.4.2.3
+      - jnxBgpM2PrefixCountersEntry   # http://oidref.com/1.3.6.1.4.1.2636.5.1.1.2.6.2.1
+      - ifAdminStatus                 # http://oidref.com/1.3.6.1.2.1.2.2.1.7
+      - ifHighSpeed                   # http://oidref.com/1.3.6.1.2.1.31.1.1.1.15
+      - ifLastChange                  # http://oidref.com/1.3.6.1.2.1.2.2.1.9
+      - ifMtu                         # http://oidref.com/1.3.6.1.2.1.2.2.1.4
+      - ifOperStatus                  # http://oidref.com/1.3.6.1.2.1.2.2.1.8
+      - ifHCInBroadcastPkts           # http://oidref.com/1.3.6.1.2.1.31.1.1.1.9
+      - ifHCInMulticastPkts           # http://oidref.com/1.3.6.1.2.1.31.1.1.1.8
+      - ifHCInUcastPkts               # http://oidref.com/1.3.6.1.2.1.31.1.1.1.7
+      - ifHCInOctets                  # http://oidref.com/1.3.6.1.2.1.31.1.1.1.6
+      - ifHCOutBroadcastPkts          # http://oidref.com/1.3.6.1.2.1.31.1.1.1.13
+      - ifHCOutMulticastPkts          # http://oidref.com/1.3.6.1.2.1.31.1.1.1.12
+      - ifHCOutUcastPkts              # http://oidref.com/1.3.6.1.2.1.31.1.1.1.11
+      - ifHCOutOctets                 # http://oidref.com/1.3.6.1.2.1.31.1.1.1.10
+      - ifInErrors                    # http://oidref.com/1.3.6.1.2.1.2.2.1.14
+      - ifInDiscards                  # http://oidref.com/1.3.6.1.2.1.2.2.1.13
+      - ifOutErrors                   # http://oidref.com/1.3.6.1.2.1.2.2.1.20
+      - ifOutDiscards                 # http://oidref.com/1.3.6.1.2.1.2.2.1.19
+    version: 2
+    max_repetitions: 25
+    retries: 3
+    timeout: 5s
+    auth:
+      community: sc-public
+    lookups:
+      - source_indexes: [ jnxOperatingContentsIndex, jnxOperatingL1Index, jnxOperatingL2Index, jnxOperatingL3Index ]
+        lookup : jnxOperatingDescr
+      - source_indexes: [ifIndex]
+        lookup: ifAlias           # http://oidref.com/ 1.3.6.1.2.1.31.1.1.1.18
+      - source_indexes: [ifIndex]
+        lookup: ifDescr           # http://oidref.com/1.3.6.1.2.1.2.2.1.2
+      - source_indexes: [ifIndex]
+        lookup: ifName            # http://oidref.com/1.3.6.1.2.1.31.1.1.1.1
+    overrides:
+      ifAlias:
+        ignore: true # Lookup metric
+      ifDescr:
+        ignore: true # Lookup metric
+      ifName:
+        ignore: true # Lookup metric
+      ifType:
+        type: EnumAsInfo
+  
+  juniper_srx:
+    walk:
+      - jnxOperatingTable             # http://oidref.com/1.3.6.1.4.1.2636.3.1.13
+      - sysUpTime                     # http://oidref.com/1.3.6.1.2.1.1.3
+      - sysDescr                      # http://oidref.com/1.3.6.1.2.1.1
+      - sysName                       # http://oidref.com/1.3.6.1.2.1.1.5
+      - sysLocation                   # http://oidref.com/1.3.6.1.2.1.1.6
+      - sysContact                    # http://oidref.com/1.3.6.1.2.1.1.4
+      - jnxYellowAlarms               # http://oidref.com/1.3.6.1.4.1.2636.3.4.2.2
+      - jnxRedAlarms                  # http://oidref.com/1.3.6.1.4.1.2636.3.4.2.3
+      - jnxBgpM2PrefixCountersEntry   # http://oidref.com/1.3.6.1.4.1.2636.5.1.1.2.6.2.1
+      - jnxJsSPUMonitoringRoot        # http://oidref.com/1.3.6.1.4.1.2636.5.1.1.2.1.1.1.14
+      - ifAdminStatus                 # http://oidref.com/1.3.6.1.2.1.2.2.1.7
+      - ifHighSpeed                   # http://oidref.com/1.3.6.1.2.1.31.1.1.1.15
+      - ifLastChange                  # http://oidref.com/1.3.6.1.2.1.2.2.1.9
+      - ifMtu                         # http://oidref.com/1.3.6.1.2.1.2.2.1.4
+      - ifOperStatus                  # http://oidref.com/1.3.6.1.2.1.2.2.1.8
+      - ifHCInBroadcastPkts           # http://oidref.com/1.3.6.1.2.1.31.1.1.1.9
+      - ifHCInMulticastPkts           # http://oidref.com/1.3.6.1.2.1.31.1.1.1.8
+      - ifHCInUcastPkts               # http://oidref.com/1.3.6.1.2.1.31.1.1.1.7
+      - ifHCInOctets                  # http://oidref.com/1.3.6.1.2.1.31.1.1.1.6
+      - ifHCOutBroadcastPkts          # http://oidref.com/1.3.6.1.2.1.31.1.1.1.13
+      - ifHCOutMulticastPkts          # http://oidref.com/1.3.6.1.2.1.31.1.1.1.12
+      - ifHCOutUcastPkts              # http://oidref.com/1.3.6.1.2.1.31.1.1.1.11
+      - ifHCOutOctets                 # http://oidref.com/1.3.6.1.2.1.31.1.1.1.10
+      - ifInErrors                    # http://oidref.com/1.3.6.1.2.1.2.2.1.14
+      - ifInDiscards                  # http://oidref.com/1.3.6.1.2.1.2.2.1.13
+      - ifOutErrors                   # http://oidref.com/1.3.6.1.2.1.2.2.1.20
+      - ifOutDiscards                 # http://oidref.com/1.3.6.1.2.1.2.2.1.19
+    version: 2
+    max_repetitions: 25
+    retries: 3
+    timeout: 5s
+    auth:
+      community: sc-public
+    lookups:
+      - source_indexes: [ jnxOperatingContentsIndex, jnxOperatingL1Index, jnxOperatingL2Index, jnxOperatingL3Index ]
+        lookup : jnxOperatingDescr
+      - source_indexes: [ jnxJsClusterMonitoringNodeIndex ]
+        lookup : jnxJsClusterMonitoringNodeDescr
+      - source_indexes: [ jnxJsSPUMonitoringIndex ]
+        lookup : jnxJsSPUMonitoringNodeDescr
+      - source_indexes: [ jnxJsSPUMonitoringIndex ]
+        lookup : jnxJsSPUMonitoringFPCIndex
+      - source_indexes: [ifIndex]
+        lookup: ifAlias           # http://oidref.com/ 1.3.6.1.2.1.31.1.1.1.18
+      - source_indexes: [ifIndex]
+        lookup: ifDescr           # http://oidref.com/1.3.6.1.2.1.2.2.1.2
+      - source_indexes: [ifIndex]
+        lookup: ifName            # http://oidref.com/1.3.6.1.2.1.31.1.1.1.1
+    overrides:
+      jnxJsClusterMonitoringNodeDescr:
+        ignore: true # Lookup metric
+      jnxJsSPUMonitoringNodeDescr:
+        ignore: true # Lookup metric
+      jnxJsSPUMonitoringFPCIndex:
+        ignore: true # Lookup metric
+      jnxJsSPUMonitoringNodeIndex:
+        ignore: true # Lookup metric
+      jnxJsSPUMonitoringSPUIndex:
+        ignore: true # Lookup metric
+      jnxJsSPUMonitoringIndex:
+        ignore: true # Lookup metric
+      ifAlias:
+        ignore: true # Lookup metric
+      ifDescr:
+        ignore: true # Lookup metric
+      ifName:
+        ignore: true # Lookup metric
+      ifType:
+        type: EnumAsInfo
+    
