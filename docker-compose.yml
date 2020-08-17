@@ -14,7 +14,7 @@ services:
       - prometheus_data:/prometheus
       - ${PWD}/config/prometheus.yml:/etc/prometheus/prometheus.yml
     command:
-      - '--storage.tsdb.retention.time=30d'
+      - '--storage.tsdb.retention.size=10GB'
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--log.level=debug'
 
